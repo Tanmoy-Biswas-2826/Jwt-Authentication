@@ -29,4 +29,12 @@ public class AuthUtil {
                 .signWith(getSecretKey())
                 .compact();
     }
+    public String getUserNameFromToken(String token){
+        return Jwts.parser()
+                .verifyWith(getSecretKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .getSubject();
+    }
 }

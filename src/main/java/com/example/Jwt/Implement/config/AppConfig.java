@@ -21,13 +21,13 @@ public class AppConfig {
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
-    @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder){
-        UserDetails user = User.withUsername("admin")
-                .password(passwordEncoder.encode("pass"))
-                .roles("ADMIN")
-                .build();
-        return new InMemoryUserDetailsManager(user);
-    }
+//    @Bean
+//    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder){
+//        UserDetails user = User.withUsername("admin")
+//                .password(passwordEncoder.encode("pass"))
+//                .roles("ADMIN")
+//                .build();
+//        return new InMemoryUserDetailsManager(user);
+//    }
 
 }

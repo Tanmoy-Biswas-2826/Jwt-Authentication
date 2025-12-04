@@ -15,6 +15,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @RequiredArgsConstructor
@@ -23,6 +24,7 @@ public class WebSecurityConfig {
     // Inject the beans that will be used to create the AuthenticationManager
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
+    private  final JwtAuthFilter jwtAuthFilter;
 //    @Bean
 //    public AuthenticationManager authenticationManager() {
 //        // Instantiate DaoAuthenticationProvider and pass dependencies to the constructor
@@ -50,9 +52,10 @@ public class WebSecurityConfig {
                         sessionConfig.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth->auth
                     .requestMatchers("/auth/**").permitAll()
-                    .requestMatchers("/admin/**").hasRole("ADMIN")
-                    .requestMatchers("/doctor/**").hasAnyRole("DOCTOR","ADMIN")
-        );
+                                .anyRequest().authenticated()
+//                    .requestMatchers("/admin/**").hasRole("ADMIN")
+//                    .requestMatchers("/doctor/**").hasAnyRole("DOCTOR","ADMIN")
+        ).addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
     }
 }

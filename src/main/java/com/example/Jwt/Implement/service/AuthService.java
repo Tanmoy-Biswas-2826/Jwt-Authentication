@@ -30,6 +30,33 @@ public class AuthService {
 
     public LoginResponseDto login(LogInRequestDto logInRequestDto){
         LOGGER.info("Inside of loginService()::");
+        /*
+        1. UsernamePasswordAuthenticationToken is created
+        👉 contains raw username & password
+        2. AuthenticationManager delegates to: AuthenticationProvider
+        usually (DaoAuthenticationProvider)
+        3. DaoAuthenticationProvider: calls your UserDetailsService
+        loads user from DB
+        compares hashed password using PasswordEncoder
+
+        //THIS IS THE FULL FLOW TO VERIFY USER AND PASSWORD AND CREATE JWT
+        Login API
+           ↓
+        AuthenticationManager
+           ↓
+        DaoAuthenticationProvider
+           ↓
+        UserDetailService.loadUserByUsername()
+           ↓
+        UserRepository → DB
+           ↓
+        User entity returned
+           ↓
+        PasswordEncoder.matches()
+           ↓
+        Authentication SUCCESS
+
+        */
         Authentication authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(logInRequestDto.getUsername(), logInRequestDto.getPassword())
         );

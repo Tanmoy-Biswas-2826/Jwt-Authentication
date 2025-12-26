@@ -22,6 +22,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final UserRepository userRepository;
     private final AuthUtil authUtil;
+
+    /*Logic for JWT validation*/
     @Override
     protected  void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         log.info("Incoming request :: {}", request.getRequestURI());
@@ -36,9 +38,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         if(userName != null && SecurityContextHolder.getContext().getAuthentication() ==  null){
             User user = userRepository.findByUserName(userName).orElseThrow();
+
+            //This line use for authenticate user check with user, credential, authority;
             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(user,null,user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
         }
+        //move forward
         filterChain.doFilter(request,response);
     }
 }

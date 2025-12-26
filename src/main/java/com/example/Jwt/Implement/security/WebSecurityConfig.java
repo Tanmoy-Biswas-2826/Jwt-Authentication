@@ -25,19 +25,6 @@ public class WebSecurityConfig {
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
     private  final JwtAuthFilter jwtAuthFilter;
-//    @Bean
-//    public AuthenticationManager authenticationManager() {
-//        // Instantiate DaoAuthenticationProvider and pass dependencies to the constructor
-//        DaoAuthenticationProvider authenticationProvider =
-//                new DaoAuthenticationProvider( userDetailsService);
-//
-//        // OR (If you prefer not to use the constructor that reverses the arguments)
-//        // DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-//        // authenticationProvider.setUserDetailsService(userDetailsService); // This setter is now removed
-//        // authenticationProvider.setPasswordEncoder(passwordEncoder);       // This setter is now removed
-//
-//        return new ProviderManager(authenticationProvider);
-//    }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration){
@@ -51,7 +38,7 @@ public class WebSecurityConfig {
                 .sessionManagement(sessionConfig ->
                         sessionConfig.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth->auth
-                    .requestMatchers("/auth/**").permitAll()
+                                .requestMatchers("/auth/**").permitAll()
                                 .anyRequest().authenticated()
 //                    .requestMatchers("/admin/**").hasRole("ADMIN")
 //                    .requestMatchers("/doctor/**").hasAnyRole("DOCTOR","ADMIN")

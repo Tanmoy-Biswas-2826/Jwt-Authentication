@@ -12,22 +12,9 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @Configuration
 public class AppConfig {
-//    @Bean
-//    public ModelMapper modelMapper(){
-//        return new ModelMapper();
-//    }
-
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
-//    @Bean
-//    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder){
-//        UserDetails user = User.withUsername("admin")
-//                .password(passwordEncoder.encode("pass"))
-//                .roles("ADMIN")
-//                .build();
-//        return new InMemoryUserDetailsManager(user);
-//    }
 
 }
